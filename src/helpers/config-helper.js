@@ -14,14 +14,15 @@ const api = {
   error: undefined,
   init () {
     return Bluebird.resolve()
-      .then(() => {
+      .then(async () => {
         let config;
 
         if (args.url) {
           config = api.parseDbUrl(args.url);
         } else {
           try {
-            config = require(api.getConfigFile());
+            // config = require(api.getConfigFile());
+            config = await import(api.getConfigFile())
           } catch (e) {
             api.error = e;
           }
